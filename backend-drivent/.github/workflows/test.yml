@@ -1,0 +1,26 @@
+name: Test
+on:
+  pull_request:
+env:
+  POSTGRES_USERNAME: caue
+  POSTGRES_PASSWORD: 49971776
+  POSTGRES_HOST: localhost
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: drivent4
+  JWT_SECRET: 49971776
+  DATABASE_URL: postgresql://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?schema=public
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        run: npm run ci:build
+
+      - name: Test
+        run: npm run ci:test
